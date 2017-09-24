@@ -2,7 +2,7 @@
   (:require
    [cljsjs.d3 :as d3]))
 
-(defn render [id data]
+(defn render [id data color]
   (let [select (.. js/d3
                    (select id))
         rect (.. select node getBoundingClientRect)
@@ -10,8 +10,10 @@
         width (.-width rect)
         max-y (apply max (map #(apply max (vals %1)) data))
         members (clj->js (keys (first data)))
-        color (.. js/d3
-                  (scaleOrdinal js/d3.schemeCategory10))
+        offset-scale (.. js/d3
+                         (scaleBand)
+                         (domain members)
+                         (range #js [-4 4]))
         x-scale (.. js/d3
               (scaleLinear)
               (range #js [10 (- width 10)])
@@ -19,7 +21,7 @@
         y-scale (.. js/d3
               (scaleLinear)
               (range #js [10 (- height 10)])
-              (domain #js [(- max-y) max-y]))]
+              (domain #js [max-y (- max-y)]))]
     (let [select (.. select
                      (selectAll ".dotgroup")
                      (data members))
@@ -32,7 +34,7 @@
       (.. enter
           (append "path")
           (attr "fill" "none")
-          (attr "stroke-width" 4))
+          (attr "stroke-width" 2))
       (.each merged (fn [member]
                       (this-as t
                         (let [select (.. js/d3
@@ -42,7 +44,8 @@
                               line (.. js/d3
                                        (line)
                                        (x (fn [d i] (x-scale i)))
-                                       (y (fn [d] (y-scale (aget d member)))))]
+                                       (y (fn [d] (+ (offset-scale member)
+                                                     (y-scale (aget d member))))))]
                           (.. select
                               (attr "stroke" (fn [d] (color member)))
                               (attr "d" line)))
@@ -57,5 +60,6 @@
                                                 (merge enter)
                                                 (attr "r" 7)
                                                 (attr "fill" (fn [d] (color member)))
-                                                (attr "cy" (fn [d] (y-scale (aget d member))))
+                                                (attr "cy" (fn [d] (+ (offset-scale member)
+                                                                      (y-scale (aget d member)))))
                                                 (attr "cx" (fn [d i] (x-scale i))))])))))))

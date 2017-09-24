@@ -9,6 +9,8 @@
    [reagent.core :as r]))
 
 (enable-console-print!)
+(def colors (.. js/d3
+                 (scaleOrdinal js/d3.schemeCategory10)))
 (defn log [& args]
   (apply js/console.log args))
 (defonce state (r/atom {:trips {"bosnien" {:name "Bosnien"
@@ -52,10 +54,14 @@
            (contains? (:trips @state) (nth (:location @staging) 0)))
       [:div
        [:svg {:id "vis" :style {:width "100%" :height "300px"}}]
-       (for [acc (e/calculate (get-in @state [:trips (nth (:location @staging) 0)]))]
-         [:div (pr-str acc)])]
+       (let [trip (get-in @state [:trips (nth (:location @staging) 0)])]
+         [:div
+          (for [member (:members trip)]
+                [:span {:style {:font-size "2em" :margin "0.1em" :color (colors member)}} member])
+          (for [acc (e/calculate trip)]
+            [:div (pr-str acc)])])]
       :else
       [trips-view])]])
 
 (r/render [app] (js/document.getElementById "app"))
-(time/render "#vis" (e/calculate(get-in @state [:trips "bosnien"])))
+(time/render "#vis" (e/calculate(get-in @state [:trips "bosnien"])) colors)
