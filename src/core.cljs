@@ -1,15 +1,24 @@
 (ns evensteven.core
   (:require
+   [evensteven.graph-time :as time]
    [cljsjs.d3 :as d3]
    [clojure.string :as str]
    [clojure.core.reducers :as red]
+   [evensteven.even :as e]
    [reagent-forms.core :refer [bind-fields]]
    [reagent.core :as r]))
 
 (enable-console-print!)
 (defn log [& args]
   (apply js/console.log args))
-(defonce state (r/atom {}))
+(defonce state (r/atom {:trips {"bosnien" {:name "Bosnien"
+                                           :members ["Alex" "Sadik" "Hussein" "Joachim" "Patrik"]
+                                           :transactions [{:payments [{:amount 106
+                                                                       :splitters ["Sadik"]}]}
+                                                          {:payments [{:amount 151.59
+                                                                       :splitters ["Joachim"]}]}
+                                                          {:payments [{:amount 179
+                                                                       :splitters ["Patrik"]}]}]}}}))
 (def staging (r/atom {}))
 
 (defn hash-change []
@@ -37,11 +46,16 @@
   [:div.ui.container
    [:div (pr-str @state)]
    [:div (pr-str @staging)]
-   (cond
-     (and (< 0 (count (:location @staging)))
-          (contains? (:trips @state) (nth (:location @staging) 0)))
-     [:div "apa"]
-     :else
-     [trips-view])])
+   [:div.ui.segment
+    (cond
+      (and (< 0 (count (:location @staging)))
+           (contains? (:trips @state) (nth (:location @staging) 0)))
+      [:div
+       [:svg {:id "vis" :style {:width "100%" :height "300px"}}]
+       (for [acc (e/calculate (get-in @state [:trips (nth (:location @staging) 0)]))]
+         [:div (pr-str acc)])]
+      :else
+      [trips-view])]])
 
 (r/render [app] (js/document.getElementById "app"))
+(time/render "#vis" (e/calculate(get-in @state [:trips "bosnien"])))
