@@ -14,11 +14,11 @@
                   (scaleOrdinal js/d3.schemeCategory10))
         x-scale (.. js/d3
               (scaleLinear)
-              (range #js [0 width])
+              (range #js [10 (- width 10)])
               (domain #js [0 (- (count data) 1)]))
         y-scale (.. js/d3
               (scaleLinear)
-              (range #js [0 height])
+              (range #js [10 (- height 10)])
               (domain #js [(- max-y) max-y]))]
     (let [select (.. select
                      (selectAll ".dotgroup")
