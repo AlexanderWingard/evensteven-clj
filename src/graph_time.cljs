@@ -22,6 +22,14 @@
               (scaleLinear)
               (range #js [10 (- height 10)])
               (domain #js [max-y (- max-y)]))]
+    (.. select
+        (append "line")
+        (attr "x1" 0)
+        (attr "y1" (y-scale 0))
+        (attr "x2" width)
+        (attr "y2" (y-scale 0))
+        (attr "shape-rendering" "crispEdges")
+        (attr "stroke" "black"))
     (let [select (.. select
                      (selectAll ".dotgroup")
                      (data members))
