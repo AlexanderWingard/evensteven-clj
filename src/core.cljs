@@ -25,57 +25,6 @@
      [bind-fields [:input {:field type :id (conj path :value)}] state]
      (when (some? error) [:div.ui.pointing.red.basic.label error])]))
 
-(def example
-  [
-   {
-    :name "Bosnien"
-    :members ["Alex" "Sadik" "Hussein" "Joachim" "Patrik"]
-    :transactions [
-                   {:comment "Hyrbil"
-                    :payments [{:amount 80
-                                :splitters ["Alex"]}
-                               {:amount 20
-                                :splitters ["Sadik"]}]
-                                        ;:splitters ["Alex" "Sadik"]
-                    :subsplits [{:amount 20
-                                 :splitters ["Alex" "Sadik"]}]
-                    }
-                   {:comment "Hyrbil"
-                    :payments [{:amount 80
-                                :splitters ["Alex"]}
-                               {:amount 20
-                                :splitters ["Sadik"]}]
-                                        ;:splitters ["Alex" "Sadik"]
-                    :subsplits [{:amount 20
-                                 :splitters ["Alex" "Sadik"]}]
-                    }
-                   ]
-    }
-   ])
-
-(defn splitmount [split]
-  (zipmap (:splitters split) (repeat (/ (:amount split) (count (:splitters split))))))
-
-(defn calc-new [transaction acc]
-  (let [total (- (reduce + (map :amount (:payments transaction)))
-                 (reduce + (map :amount (:subsplits transaction))))
-        with-payments (red/reduce (fn [acc elem]
-                                    (merge-with + (splitmount elem) acc))
-                                  (:payments transaction))
-        with-subsplits (red/reduce (fn [acc elem]
-                                    (merge-with + (splitmount elem) acc))
-                                  (:subsplits transaction))
-        rest-split (splitmount (assoc transaction :amount total))
-        ]
-    (merge-with - (merge-with + acc with-payments) with-subsplits rest-split)))
-
-(defn calculate [trip]
-  (red/reduce (fn [acc elem] (conj acc (calc-new (merge {:splitters (:members trip)} elem) (last acc))))
-              [(zipmap (:members trip) (repeat 0))]
-              (:transactions trip))) 
-
-(calculate (get example 0)) 
-
 (defn trips-view []
   [:div
    [:ui
@@ -83,7 +32,6 @@
       ^{:key trip} [:li[:a {:href (str "#" trip)} trip]])]
    [:div (field :text "Trip" staging [:trip])]
    [:button.ui.button {:on-click #(swap! state assoc-in [:trips (get-in @staging [:trip :value])] {})} "Add trip"]])
-
 
 (defn app []
   [:div.ui.container
