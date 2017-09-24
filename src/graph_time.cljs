@@ -8,7 +8,7 @@
         rect (.. select node getBoundingClientRect)
         height (.-height rect)
         width (.-width rect)
-        max-y (apply max (map #(apply max (vals %1)) data))
+        max-y (apply max (mapcat #(map js/Math.abs (vals %1)) data))
         members (clj->js (keys (first data)))
         offset-scale (.. js/d3
                          (scaleBand)
