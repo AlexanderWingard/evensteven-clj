@@ -58,7 +58,7 @@
                                                (append "circle"))
                                      merged (.. select
                                                 (merge enter)
-                                                (attr "r" 7)
+                                                (attr "r" 5)
                                                 (attr "fill" (fn [d] (color member)))
                                                 (attr "cy" (fn [d] (+ (offset-scale member)
                                                                       (y-scale (aget d member)))))

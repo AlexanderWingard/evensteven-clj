@@ -44,4 +44,24 @@
 (deftest test-payment
   (is (= expected-payment (last (e/calculate example-payment)))))
 
+(def example-currency
+  {:name "Example payment"
+   :members ["Alex" "Sadik"]
+   :currencies {"KN" 4}
+   :transactions [{:comment "Pay"
+                   :currency "KN"
+                   :payments [{:amount 100
+                               :splitters ["Alex"]}]}
+                  {:comment "Pay"
+                   :payments [{:amount 25
+                               :splitters ["Sadik"]}]}
+                  {:comment "Pay"
+                   :payments [{:amount 100
+                               :splitters ["Alex"]}]}]})
+
+(def expected-currency {"Alex" 50 "Sadik" -50})
+
+(deftest test-currency
+  (is (= expected-currency (last (e/calculate example-currency)))))
+
 (t/run-tests)

@@ -13,14 +13,66 @@
                  (scaleOrdinal js/d3.schemeCategory10)))
 (defn log [& args]
   (apply js/console.log args))
-(defonce state (r/atom {:trips {"bosnien" {:name "Bosnien"
+(def state (r/atom {:trips {"bosnien" {:name "Bosnien"
                                            :members ["Alex" "Sadik" "Hussein" "Joachim" "Patrik"]
+                                           :currencies {"KN" 4}
                                            :transactions [{:payments [{:amount 106
                                                                        :splitters ["Sadik"]}]}
                                                           {:payments [{:amount 151.59
                                                                        :splitters ["Joachim"]}]}
                                                           {:payments [{:amount 179
-                                                                       :splitters ["Patrik"]}]}]}}}))
+                                                                       :splitters ["Patrik"]}]}
+                                                          {:payments [{:amount 46.53
+                                                                       :splitters ["Alex"]}]}
+                                                          {:payments [{:amount 35
+                                                                       :splitters ["Sadik"]}]}
+                                                          {:payments [{:amount 6.7
+                                                                       :splitters ["Sadik"]}]}
+                                                          {:payments [{:amount 64
+                                                                       :splitters ["Sadik"]}]}
+                                                          {:payments [{:amount 100
+                                                                       :splitters ["Joachim"]}]
+                                                           :currency "KN"
+                                                           }
+                                                          {:payments [{:amount 900
+                                                                       :splitters ["Hussein"]}]
+                                                           :currency "KN"
+                                                           }
+                                                          {:payments [{:amount 50
+                                                                       :splitters ["Sadik"]}]
+                                                           :currency "KN"
+                                                           }
+                                                          {:payments [{:amount 30
+                                                                       :splitters ["Sadik"]}]
+                                                           :currency "KN"
+                                                           }
+                                                          {:payments [{:amount 260
+                                                                       :splitters ["Sadik"]}]
+                                                           :currency "KN"
+                                                           }
+                                                          {:payments [{:amount 100
+                                                                       :splitters ["Patrik"]}]
+                                                           :currency "KN"
+                                                           }
+                                                          {:payments [{:amount 600
+                                                                       :splitters ["Joachim"]}]
+                                                           :currency "KN"
+                                                           }
+                                                          {:payments [{:amount 120
+                                                                       :splitters ["Sadik"]}]
+                                                           :currency "KN"
+                                                           }
+                                                          {:payments [{:amount 12
+                                                                       :splitters ["Hussein"]}
+                                                                      {:amount 100
+                                                                       :splitters ["Sadik"]}]}
+                                                          {:payments [{:amount 18
+                                                                       :splitters ["Joachim"]}]}
+                                                          {:payments [{:amount 45
+                                                                       :splitters ["Sadik"]}]}
+                                                          {:payments [{:amount 3
+                                                                       :splitters ["Hussein"]}]}
+                                                          ]}}}))
 (def staging (r/atom {}))
 
 (defn hash-change []
@@ -46,8 +98,6 @@
 
 (defn app []
   [:div.ui.container
-   [:div (pr-str @state)]
-   [:div (pr-str @staging)]
    [:div.ui.segment
     (cond
       (and (< 0 (count (:location @staging)))
@@ -58,8 +108,9 @@
          [:div
           (for [member (:members trip)]
                 [:span {:style {:font-size "2em" :margin "0.1em" :color (colors member)}} member])
-          (for [acc (e/calculate trip)]
-            [:div (pr-str acc)])])]
+          (for [row (:transactions trip)]
+            [:div (pr-str row)])
+          [:h3 (pr-str (last(e/calculate trip)))]])]
       :else
       [trips-view])]])
 
