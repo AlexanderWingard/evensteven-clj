@@ -111,11 +111,32 @@
    [:div (field :text "Trip" staging [:trip])]
    [:button.ui.button {:on-click #(swap! state assoc-in [:trips (get-in @staging [:trip :value])] {})} "Add trip"]])
 
-(defn even-view [even currency]
-  [:div
-   [:span currency]
-   (for [[k v] even]
-     [:span {:style {:color (colors k) :margin-right "0.5em"}} (gstring/format "%s %.2f" k v)])])
+(defn even-view [even trip]
+  (let [members (:members trip)
+        currencies (:currencies trip)
+        currency-saldos (e/currency-saldos even (:currencies trip))
+        last (last even)]
+    [:table.ui.fixed.celled.table
+     [:thead
+      [:tr
+       [:th "Currency"]
+       (for [member members]
+         [:th {:style {:color (colors member)}}
+          member
+          [(if (< 0 (get last member))
+             :i.ui.green.caret.up.icon
+             :i.ui.red.caret.down.icon)]])]]
+     [:tbody
+      [:tr
+       [:td]
+       (for [member members]
+         [:td {:style {:color (colors member)}} (gstring/format "%.2f" (get last member))])]
+      (for [[currency _] currencies]
+        [:tr
+         [:td currency]
+         (for [member members]
+           [:td {:style {:color (colors member)}}
+            (gstring/format "%.2f" (get-in currency-saldos [currency member]))])])]]))
 
 (defn app []
   [:div.ui.container
@@ -133,10 +154,7 @@
          [:h2.ui.header
           [:i.money.icon]
           [:div.content "Saldo"]]
-         [:div {:style {:font-size "2em"}}
-          [even-view  (last even) ""]]
-         [:div (for [[k v] (e/currency-saldos even (:currencies trip))]
-                 [even-view v k])]
+         [even-view even trip]
          [:h2.ui.header
           [:i.filter.icon]
           [:div.content "Turnover"]]
