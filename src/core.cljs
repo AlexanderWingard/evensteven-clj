@@ -1,6 +1,7 @@
 (ns evensteven.core
   (:require
    [evensteven.graph-time :as time]
+   [goog.string :as gstring]
    [cljsjs.d3 :as d3]
    [clojure.string :as str]
    [clojure.core.reducers :as red]
@@ -19,9 +20,12 @@
               {:name "Bosnien"
                :members ["Alex" "Sadik" "Hussein" "Joachim" "Patrik"]
                :currencies {"KN" 4
-                            "EUR" 0.5}
+                            "EUR" 0.5
+                            "SEK" 5}
                :transactions [{:payments [{:amount 494.87
                                            :splitters ["Alex"]}]}
+                              {:payments [{:amount 334.70
+                                           :splitters ["Sadik"]}]}
                               {:payments [{:amount 106
                                            :splitters ["Sadik"]}]}
                               {:payments [{:amount 151.59
@@ -107,22 +111,45 @@
    [:div (field :text "Trip" staging [:trip])]
    [:button.ui.button {:on-click #(swap! state assoc-in [:trips (get-in @staging [:trip :value])] {})} "Add trip"]])
 
+(defn even-view [even currency]
+  [:div
+   [:span currency]
+   (for [[k v] even]
+     [:span {:style {:color (colors k) :margin-right "0.5em"}} (gstring/format "%s %.2f" k v)])])
+
 (defn app []
   [:div.ui.container
-   [:div.ui.segment
+   [:div.ui.segment {:style {:margin-top "5em"}}
     (cond
       (and (< 0 (count (:location @staging)))
            (contains? (:trips @state) (nth (:location @staging) 0)))
       (let [trip (get-in @state [:trips (nth (:location @staging) 0)])
             even (e/calculate trip)]
         [:div
+         [:h2.ui.header
+          [:i.line.chart.icon]
+          [:div.content "Balance"]]
          [time/graph-time {:style {:width "100%" :height "300px"}} even colors]
-         [:div
-          (for [member (:members trip)]
-            [:span {:style {:font-size "2em" :margin "0.1em" :color (colors member)}} member])
-          (for [row (:transactions trip)]
-            [:div (pr-str row)])
-          [:h3 (pr-str (last even))]]])
+         [:h2.ui.header
+          [:i.money.icon]
+          [:div.content "Saldo"]]
+         [:div {:style {:font-size "2em"}}
+          [even-view  (last even) ""]]
+         [:div (for [[k v] (e/currency-saldos even (:currencies trip))]
+                 [even-view v k])]
+         [:h2.ui.header
+          [:i.filter.icon]
+          [:div.content "Turnover"]]
+         (let [to (e/turnover trip)]
+           [:div
+            [:div {:style {:font-size "2em"}} to]
+            (for [[c v] (:currencies trip)]
+              [:div (gstring/format "%s %.2f" c (* v to))])])
+         [:h2.ui.header
+          [:i.table.icon]
+          [:div.content "Transactions"]]
+         (for [row (:transactions trip)]
+           [:div (pr-str row)])])
 
       :else
       [trips-view])]])

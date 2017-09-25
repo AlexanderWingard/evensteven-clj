@@ -27,3 +27,12 @@
                                                (:currencies trip))))
             [(zipmap (:members trip) (repeat 0))]
             (:transactions trip)))
+
+(defn turnover [trip]
+  (r/reduce (fn [acc transaction]
+              (+ acc (reduce + (map :amount (:payments transaction)))))
+            0
+            (:transactions trip)))
+
+(defn currency-saldos [even currencies]
+  (reduce-kv (fn [m k v] (assoc m k (into {} (for [[ke ve] (last even)] [ke (* ve v)])))) {} currencies))
