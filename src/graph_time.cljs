@@ -55,6 +55,7 @@
                                              (datum (clj->js data)))
                                   line (.. js/d3
                                            (line)
+                                           (curve js/d3.curveCatmullRom)
                                            (x (fn [d i] (x-scale i)))
                                            (y (fn [d] (+ (offset-scale member)
                                                          (y-scale (aget d member))))))]
