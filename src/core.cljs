@@ -114,7 +114,7 @@
       (and (< 0 (count (:location @staging)))
            (contains? (:trips @state) (nth (:location @staging) 0)))
       [:div
-       [:svg {:id "vis" :style {:width "100%" :height "300px"}}]
+       [time/graph-time {:style {:width "100%" :height "300px"}} (e/calculate (get-in @state [:trips "bosnien"])) colors]
        (let [trip (get-in @state [:trips (nth (:location @staging) 0)])]
          [:div
           (for [member (:members trip)]
@@ -126,4 +126,3 @@
       [trips-view])]])
 
 (r/render [app] (js/document.getElementById "app"))
-(time/render "#vis" (e/calculate(get-in @state [:trips "bosnien"])) colors)
