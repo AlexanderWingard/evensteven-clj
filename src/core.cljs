@@ -113,15 +113,17 @@
     (cond
       (and (< 0 (count (:location @staging)))
            (contains? (:trips @state) (nth (:location @staging) 0)))
-      [:div
-       [time/graph-time {:style {:width "100%" :height "300px"}} (e/calculate (get-in @state [:trips "bosnien"])) colors]
-       (let [trip (get-in @state [:trips (nth (:location @staging) 0)])]
+      (let [trip (get-in @state [:trips (nth (:location @staging) 0)])
+            even (e/calculate trip)]
+        [:div
+         [time/graph-time {:style {:width "100%" :height "300px"}} even colors]
          [:div
           (for [member (:members trip)]
-                [:span {:style {:font-size "2em" :margin "0.1em" :color (colors member)}} member])
+            [:span {:style {:font-size "2em" :margin "0.1em" :color (colors member)}} member])
           (for [row (:transactions trip)]
             [:div (pr-str row)])
-          [:h3 (pr-str (last(e/calculate trip)))]])]
+          [:h3 (pr-str (last even))]]])
+
       :else
       [trips-view])]])
 
