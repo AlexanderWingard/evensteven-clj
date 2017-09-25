@@ -13,66 +13,77 @@
                  (scaleOrdinal js/d3.schemeCategory10)))
 (defn log [& args]
   (apply js/console.log args))
-(def state (r/atom {:trips {"bosnien" {:name "Bosnien"
-                                           :members ["Alex" "Sadik" "Hussein" "Joachim" "Patrik"]
-                                           :currencies {"KN" 4}
-                                           :transactions [{:payments [{:amount 106
-                                                                       :splitters ["Sadik"]}]}
-                                                          {:payments [{:amount 151.59
-                                                                       :splitters ["Joachim"]}]}
-                                                          {:payments [{:amount 179
-                                                                       :splitters ["Patrik"]}]}
-                                                          {:payments [{:amount 46.53
-                                                                       :splitters ["Alex"]}]}
-                                                          {:payments [{:amount 35
-                                                                       :splitters ["Sadik"]}]}
-                                                          {:payments [{:amount 6.7
-                                                                       :splitters ["Sadik"]}]}
-                                                          {:payments [{:amount 64
-                                                                       :splitters ["Sadik"]}]}
-                                                          {:payments [{:amount 100
-                                                                       :splitters ["Joachim"]}]
-                                                           :currency "KN"
-                                                           }
-                                                          {:payments [{:amount 900
-                                                                       :splitters ["Hussein"]}]
-                                                           :currency "KN"
-                                                           }
-                                                          {:payments [{:amount 50
-                                                                       :splitters ["Sadik"]}]
-                                                           :currency "KN"
-                                                           }
-                                                          {:payments [{:amount 30
-                                                                       :splitters ["Sadik"]}]
-                                                           :currency "KN"
-                                                           }
-                                                          {:payments [{:amount 260
-                                                                       :splitters ["Sadik"]}]
-                                                           :currency "KN"
-                                                           }
-                                                          {:payments [{:amount 100
-                                                                       :splitters ["Patrik"]}]
-                                                           :currency "KN"
-                                                           }
-                                                          {:payments [{:amount 600
-                                                                       :splitters ["Joachim"]}]
-                                                           :currency "KN"
-                                                           }
-                                                          {:payments [{:amount 120
-                                                                       :splitters ["Sadik"]}]
-                                                           :currency "KN"
-                                                           }
-                                                          {:payments [{:amount 12
-                                                                       :splitters ["Hussein"]}
-                                                                      {:amount 100
-                                                                       :splitters ["Sadik"]}]}
-                                                          {:payments [{:amount 18
-                                                                       :splitters ["Joachim"]}]}
-                                                          {:payments [{:amount 45
-                                                                       :splitters ["Sadik"]}]}
-                                                          {:payments [{:amount 3
-                                                                       :splitters ["Hussein"]}]}
-                                                          ]}}}))
+(def state (r/atom
+            {:trips
+             {"bosnien"
+              {:name "Bosnien"
+               :members ["Alex" "Sadik" "Hussein" "Joachim" "Patrik"]
+               :currencies {"KN" 4
+                            "EUR" 0.5}
+               :transactions [{:payments [{:amount 494.87
+                                           :splitters ["Alex"]}]}
+                              {:payments [{:amount 106
+                                           :splitters ["Sadik"]}]}
+                              {:payments [{:amount 151.59
+                                           :splitters ["Joachim"]}]}
+                              {:payments [{:amount 179
+                                           :splitters ["Patrik"]}]}
+                              {:payments [{:amount 46.53
+                                           :splitters ["Alex"]}]}
+                              {:payments [{:amount 35
+                                           :splitters ["Sadik"]}]}
+                              {:payments [{:amount 6.7
+                                           :splitters ["Sadik"]}]}
+                              {:payments [{:amount 64
+                                           :splitters ["Sadik"]}]}
+                              {:payments [{:amount 100
+                                           :splitters ["Joachim"]}]
+                               :currency "KN"}
+                              {:payments [{:amount 900
+                                           :splitters ["Hussein"]}]
+                               :currency "KN"}
+                              {:payments [{:amount 50
+                                           :splitters ["Sadik"]}]
+                               :currency "KN"}
+                              {:payments [{:amount 30
+                                           :splitters ["Sadik"]}]
+                               :currency "KN"}
+                              {:payments [{:amount 260
+                                           :splitters ["Sadik"]}]
+                               :currency "KN"}
+                              {:payments [{:amount 100
+                                           :splitters ["Patrik"]}]
+                               :currency "KN"}
+                              {:payments [{:amount 600
+                                           :splitters ["Joachim"]}]
+                               :currency "KN"}
+                              {:payments [{:amount 120
+                                           :splitters ["Sadik"]}]
+                               :currency "KN"}
+                              {:payments [{:amount 12
+                                           :splitters ["Hussein"]}
+                                          {:amount 100
+                                           :splitters ["Sadik"]}]}
+                              {:payments [{:amount 18
+                                           :splitters ["Joachim"]}]}
+                              {:payments [{:amount 45
+                                           :splitters ["Sadik"]}]}
+                              {:payments [{:amount 3
+                                           :splitters ["Hussein"]}]}
+                              {:payments [{:amount 50
+                                           :splitters ["Joachim"]}]
+                               :currency "EUR"
+                               :splitters ["Alex" "Hussein" "Joachim" "Patrik"]}
+                              {:payments [{:amount 10
+                                           :splitters ["Joachim"]}]
+                               :splitters ["Alex" "Hussein" "Joachim" "Patrik"]}
+                              {:payments [{:amount 3
+                                           :splitters ["Joachim"]}]
+                               :splitters ["Alex" "Hussein" "Joachim" "Patrik"]}
+                              {:payments [{:amount 14
+                                           :splitters ["Joachim"]}]
+                               :splitters ["Alex" "Hussein" "Joachim" "Patrik"]}
+                              ]}}}))
 (def staging (r/atom {}))
 
 (defn hash-change []
