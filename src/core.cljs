@@ -152,11 +152,11 @@
           [:div.content "Balance"]]
          [time/graph-time {:style {:width "100%" :height "300px"}} even colors]
          [:h2.ui.header
-          [:i.money.icon]
+          [:i.users.icon]
           [:div.content "Saldo"]]
          [even-view even trip]
          [:h2.ui.header
-          [:i.filter.icon]
+          [:i.calculator.icon]
           [:div.content "Turnover"]]
          (let [to (e/turnover trip)]
            [:div
@@ -164,7 +164,7 @@
             (for [[c v] (:currencies trip)]
               [:div (gstring/format "%s %.2f" c (* v to))])])
          [:h2.ui.header
-          [:i.table.icon]
+          [:i.database.icon]
           [:div.content "Transactions"]]
          (for [row (:transactions trip)]
            [:div (pr-str row)])])
