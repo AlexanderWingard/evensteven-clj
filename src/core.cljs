@@ -34,7 +34,9 @@
                               {:payments [{:amount 179
                                            :splitters ["Patrik"]}]}
                               {:payments [{:amount 46.53
-                                           :splitters ["Alex"]}]}
+                                           :splitters ["Alex"]}]
+                               :subsplits [{:amount (+ 1.9 1.65 11.75)
+                                            :splitters ["Alex" "Joachim" "Sadik" "Patrik"]}]}
                               {:payments [{:amount 35
                                            :splitters ["Sadik"]}]}
                               {:payments [{:amount 6.7
@@ -88,6 +90,12 @@
                               {:payments [{:amount 14
                                            :splitters ["Joachim"]}]
                                :splitters ["Alex" "Hussein" "Joachim" "Patrik"]}
+                              {:payments [{:amount 2
+                                           :splitters ["Sadik"]}]
+                               :splitters ["Alex"]}
+                              {:payments [{:amount 18
+                                           :splitters ["Sadik"]}]
+                               :currency "hr"}
                               ]}}}))
 (def staging (r/atom {}))
 
