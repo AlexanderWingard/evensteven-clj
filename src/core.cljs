@@ -19,9 +19,10 @@
              {"bosnien"
               {:name "Bosnien"
                :members ["Alex" "Sadik" "Hussein" "Joachim" "Patrik"]
-               :currencies {"KN" 4
-                            "EUR" 0.5
-                            "SEK" 5}
+               :currencies {"ba" 1
+                            "hr" 4
+                            "eu" 0.5
+                            "se" 5}
                :transactions [{:payments [{:amount 494.87
                                            :splitters ["Alex"]}]}
                               {:payments [{:amount 334.70
@@ -42,28 +43,28 @@
                                            :splitters ["Sadik"]}]}
                               {:payments [{:amount 100
                                            :splitters ["Joachim"]}]
-                               :currency "KN"}
+                               :currency "hr"}
                               {:payments [{:amount 900
                                            :splitters ["Hussein"]}]
-                               :currency "KN"}
+                               :currency "hr"}
                               {:payments [{:amount 50
                                            :splitters ["Sadik"]}]
-                               :currency "KN"}
+                               :currency "hr"}
                               {:payments [{:amount 30
                                            :splitters ["Sadik"]}]
-                               :currency "KN"}
+                               :currency "hr"}
                               {:payments [{:amount 260
                                            :splitters ["Sadik"]}]
-                               :currency "KN"}
+                               :currency "hr"}
                               {:payments [{:amount 100
                                            :splitters ["Patrik"]}]
-                               :currency "KN"}
+                               :currency "hr"}
                               {:payments [{:amount 600
                                            :splitters ["Joachim"]}]
-                               :currency "KN"}
+                               :currency "hr"}
                               {:payments [{:amount 120
                                            :splitters ["Sadik"]}]
-                               :currency "KN"}
+                               :currency "hr"}
                               {:payments [{:amount 12
                                            :splitters ["Hussein"]}
                                           {:amount 100
@@ -76,7 +77,7 @@
                                            :splitters ["Hussein"]}]}
                               {:payments [{:amount 50
                                            :splitters ["Joachim"]}]
-                               :currency "EUR"
+                               :currency "eu"
                                :splitters ["Alex" "Hussein" "Joachim" "Patrik"]}
                               {:payments [{:amount 10
                                            :splitters ["Joachim"]}]
@@ -116,7 +117,7 @@
         currencies (:currencies trip)
         currency-saldos (e/currency-saldos even (:currencies trip))
         last (last even)]
-    [:table.ui.fixed.celled.table
+    [:table.ui.fixed.striped.celled.table
      [:thead
       [:tr
        [:th "Currency"]
@@ -127,16 +128,26 @@
              :i.ui.green.caret.up.icon
              :i.ui.red.caret.down.icon)]])]]
      [:tbody
-      [:tr
-       [:td]
-       (for [member members]
-         [:td {:style {:color (colors member)}} (gstring/format "%.2f" (get last member))])]
       (for [[currency _] currencies]
         [:tr
-         [:td currency]
+         [:td [:i {:class (str currency " flag")}]]
          (for [member members]
            [:td {:style {:color (colors member)}}
             (gstring/format "%.2f" (get-in currency-saldos [currency member]))])])]]))
+
+(defn turnover-view [trip]
+  (let [currencies (:currencies trip)
+        to (e/turnover trip)]
+    [:table.ui.celled.table
+     [:thead
+      [:tr
+       (for [[c _] currencies]
+         [:th
+          [:i {:class (str c " flag")}]])]]
+     [:tbody
+      [:tr
+       (for [[c v] currencies]
+         [:td (gstring/format "%.2f" (* v to))])]]]))
 
 (defn app []
   [:div.ui.container
@@ -158,11 +169,7 @@
          [:h2.ui.header
           [:i.calculator.icon]
           [:div.content "Turnover"]]
-         (let [to (e/turnover trip)]
-           [:div
-            [:div {:style {:font-size "2em"}} to]
-            (for [[c v] (:currencies trip)]
-              [:div (gstring/format "%s %.2f" c (* v to))])])
+         [turnover-view trip]
          [:h2.ui.header
           [:i.database.icon]
           [:div.content "Transactions"]]
