@@ -33,7 +33,7 @@
             (attr "x2" width)
             (attr "y2" (y-scale 0))
             (attr "shape-rendering" "crispEdges")
-            (attr "stroke" "black"))
+            (attr "stroke" "lightgrey"))
         (let [select (.. select
                          (selectAll ".dotgroup")
                          (data members))
@@ -71,7 +71,7 @@
                                             (append "circle"))
                                   merged (.. select
                                              (merge enter)
-                                             (attr "r" 5)
+                                             (attr "r" 3)
                                              (attr "fill" (fn [d] (color member)))
                                              (attr "cy" (fn [d] (+ (offset-scale member)
                                                                    (y-scale (aget d member)))))

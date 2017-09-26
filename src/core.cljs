@@ -96,6 +96,30 @@
                               {:payments [{:amount 18
                                            :splitters ["Sadik"]}]
                                :currency "hr"}
+                              {:payments [{:amount 75.88
+                                           :splitters ["Patrik"]}]}
+                              {:payments [{:amount 40
+                                           :splitters ["Sadik"]}]}
+                              {:payments [{:amount 200
+                                           :splitters ["Sadik"]}]
+                               :splitters ["Alex" "Joachim" "Sadik" "Patrik"]
+                               :currency "hr"}
+                              {:payments [{:amount 210
+                                           :splitters ["Sadik"]}]
+                               :splitters ["Alex" "Joachim" "Sadik" "Patrik"]
+                               :currency "hr"}
+                              {:payments [{:amount 30
+                                           :splitters ["Sadik"]}]
+                               :currency "hr"}
+                              {:payments [{:amount 50
+                                           :splitters ["Sadik"]}]
+                               :currency "hr"}
+                              {:payments [{:amount 521
+                                            :splitters ["Hussein"]}]
+                                :currency "hr"}
+                              {:payments [{:amount 60
+                                           :splitters ["Joachim"]}]
+                               :currency "hr"}
                               ]}}}))
 (def staging (r/atom {}))
 
