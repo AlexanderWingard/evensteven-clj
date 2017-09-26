@@ -3,12 +3,9 @@
    [reagent.core :as r]
    [cljsjs.d3 :as d3]))
 
-(defn graph-time [svg-attrs data color]
-  (r/create-class
-   {:component-did-mount
-    (fn [comp]
-      (let [select (.. js/d3
-                       (select (r/dom-node comp)))
+(defn render [node data color]
+  (let [select (.. js/d3
+                   (select node))
             rect (.. select node getBoundingClientRect)
             height (.-height rect)
             width (.-width rect)
@@ -76,5 +73,17 @@
                                              (attr "cy" (fn [d] (+ (offset-scale member)
                                                                    (y-scale (aget d member)))))
                                              (attr "cx" (fn [d i] (x-scale i))))])))))))
-    :reagent-render
-    (fn [data color] [:svg svg-attrs])}))
+
+(defn graph-time [svg-attrs data color]
+  (let [listener (atom nil)]
+    (r/create-class
+     {:component-did-mount
+      (fn [comp]
+        (reset! listener #(render (r/dom-node comp) data color))
+        (js/window.addEventListener "resize" @listener)
+        (@listener))
+      :component-will-unmount
+      (fn [comp]
+        (js/window.removeEventListener "resize" @listener))
+      :reagent-render
+      (fn [svg-attrs data color] [:svg svg-attrs])})))
