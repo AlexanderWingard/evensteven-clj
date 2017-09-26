@@ -120,9 +120,9 @@
     [:table.ui.fixed.striped.celled.table
      [:thead
       [:tr
-       [:th "Currency"]
+       [:th]
        (for [member members]
-         [:th {:style {:color (colors member)}}
+         [:th.right.aligned {:style {:color (colors member)}}
           member
           [(if (< 0 (get last member))
              :i.ui.green.caret.up.icon
@@ -132,7 +132,7 @@
         [:tr
          [:td [:i {:class (str currency " flag")}]]
          (for [member members]
-           [:td {:style {:color (colors member)}}
+           [:td.right.aligned {:style {:color (colors member)}}
             (gstring/format "%.2f" (get-in currency-saldos [currency member]))])])]]))
 
 (defn turnover-view [trip]
@@ -142,12 +142,12 @@
      [:thead
       [:tr
        (for [[c _] currencies]
-         [:th
+         [:th.right.aligned
           [:i {:class (str c " flag")}]])]]
      [:tbody
       [:tr
        (for [[c v] currencies]
-         [:td (gstring/format "%.2f" (* v to))])]]]))
+         [:td.right.aligned (gstring/format "%.2f" (* v to))])]]]))
 
 (defn app []
   [:div.ui.container
