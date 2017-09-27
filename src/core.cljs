@@ -187,17 +187,17 @@
      [:thead
       [:tr
        [:th]
-       (for [member members]
-         [:th.right.aligned {:style {:color (colors member)}}
+       (for [[currency _] currencies]
+         [:th.right.aligned [:i {:class (str currency " flag")}]])]]
+     [:tbody
+      (for [member members]
+        [:tr {:style {:color (colors member)}}
+         [:td
           member
           [(if (< 0 (get last member))
              :i.ui.green.caret.up.icon
-             :i.ui.red.caret.down.icon)]])]]
-     [:tbody
-      (for [[currency _] currencies]
-        [:tr
-         [:td [:i {:class (str currency " flag")}]]
-         (for [member members]
+             :i.ui.red.caret.down.icon)]]
+         (for [[currency _] currencies]
            [:td.right.aligned {:style {:color (colors member)}}
             (gstring/format "%.2f" (get-in currency-saldos [currency member]))])])]]))
 
