@@ -34,5 +34,11 @@
             0
             (:transactions trip)))
 
+(defn tag-sums [trip]
+  (r/reduce (fn [acc transaction]
+              (merge-with + acc {(:tag transaction) (reduce + (map :amount (:payments transaction)))}))
+            {}
+            (:transactions trip)))
+
 (defn currency-saldos [even currencies]
   (reduce-kv (fn [m k v] (assoc m k (into {} (for [[ke ve] (last even)] [ke (* ve v)])))) {} currencies))

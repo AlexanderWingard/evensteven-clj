@@ -24,102 +24,136 @@
                             "eu" 0.5
                             "se" 5}
                :transactions [{:payments [{:amount 494.87
-                                           :splitters ["Alex"]}]}
+                                           :splitters ["Alex"]}]
+                               :tag "car"}
                               {:payments [{:amount 334.70
-                                           :splitters ["Sadik"]}]}
+                                           :splitters ["Sadik"]}]
+                               :tag "car"}
                               {:payments [{:amount 106
-                                           :splitters ["Sadik"]}]}
+                                           :splitters ["Sadik"]}]
+                               :tag "food"}
                               {:payments [{:amount 151.59
-                                           :splitters ["Joachim"]}]}
+                                           :splitters ["Joachim"]}]
+                               :tag "food"}
                               {:payments [{:amount 179
-                                           :splitters ["Patrik"]}]}
+                                           :splitters ["Patrik"]}]
+                               :tag "food"}
                               {:payments [{:amount 46.53
                                            :splitters ["Alex"]}]
                                :subsplits [{:amount (+ 1.9 1.65 11.75)
-                                            :splitters ["Alex" "Joachim" "Sadik" "Patrik"]}]}
+                                            :splitters ["Alex" "Joachim" "Sadik" "Patrik"]}]
+                               :tag "food"}
                               {:payments [{:amount 35
-                                           :splitters ["Sadik"]}]}
+                                           :splitters ["Sadik"]}]
+                               :tag "food"}
                               {:payments [{:amount 6.7
-                                           :splitters ["Sadik"]}]}
+                                           :splitters ["Sadik"]}]
+                               :tag "food"}
                               {:payments [{:amount 64
-                                           :splitters ["Sadik"]}]}
+                                           :splitters ["Sadik"]}]
+                               :tag "car"}
                               {:payments [{:amount 100
                                            :splitters ["Joachim"]}]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "food"}
                               {:payments [{:amount 900
                                            :splitters ["Hussein"]}]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "food"}
                               {:payments [{:amount 50
                                            :splitters ["Sadik"]}]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "food"}
                               {:payments [{:amount 30
                                            :splitters ["Sadik"]}]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "car"}
                               {:payments [{:amount 260
                                            :splitters ["Sadik"]}]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "car"}
                               {:payments [{:amount 100
                                            :splitters ["Patrik"]}]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "food"}
                               {:payments [{:amount 600
                                            :splitters ["Joachim"]}]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "food"}
                               {:payments [{:amount 120
                                            :splitters ["Sadik"]}]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "food"}
                               {:payments [{:amount 12
                                            :splitters ["Hussein"]}
                                           {:amount 100
-                                           :splitters ["Sadik"]}]}
+                                           :splitters ["Sadik"]}]
+                               :tag "food"}
                               {:payments [{:amount 18
-                                           :splitters ["Joachim"]}]}
+                                           :splitters ["Joachim"]}]
+                               :tag "food"}
                               {:payments [{:amount 45
-                                           :splitters ["Sadik"]}]}
+                                           :splitters ["Sadik"]}]
+                               :tag "food"}
                               {:payments [{:amount 3
-                                           :splitters ["Hussein"]}]}
+                                           :splitters ["Hussein"]}]
+                               :tag "car"}
                               {:payments [{:amount 50
                                            :splitters ["Joachim"]}]
                                :currency "eu"
-                               :splitters ["Alex" "Hussein" "Joachim" "Patrik"]}
+                               :splitters ["Alex" "Hussein" "Joachim" "Patrik"]
+                               :tag "food"}
                               {:payments [{:amount 10
                                            :splitters ["Joachim"]}]
-                               :splitters ["Alex" "Hussein" "Joachim" "Patrik"]}
+                               :splitters ["Alex" "Hussein" "Joachim" "Patrik"]
+                               :tag "food"}
                               {:payments [{:amount 3
                                            :splitters ["Joachim"]}]
-                               :splitters ["Alex" "Hussein" "Joachim" "Patrik"]}
+                               :splitters ["Alex" "Hussein" "Joachim" "Patrik"]
+                               :tag "car"}
                               {:payments [{:amount 14
                                            :splitters ["Joachim"]}]
-                               :splitters ["Alex" "Hussein" "Joachim" "Patrik"]}
+                               :splitters ["Alex" "Hussein" "Joachim" "Patrik"]
+                               :tag "food"}
                               {:payments [{:amount 2
                                            :splitters ["Sadik"]}]
                                :splitters ["Alex"]}
                               {:payments [{:amount 18
                                            :splitters ["Sadik"]}]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "food"}
                               {:payments [{:amount 75.88
-                                           :splitters ["Patrik"]}]}
+                                           :splitters ["Patrik"]}]
+                               :tag "car"}
                               {:payments [{:amount 40
-                                           :splitters ["Sadik"]}]}
+                                           :splitters ["Sadik"]}]
+                               :tag "car"}
                               {:payments [{:amount 200
                                            :splitters ["Sadik"]}]
                                :splitters ["Alex" "Joachim" "Sadik" "Patrik"]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "booze"}
                               {:payments [{:amount 210
                                            :splitters ["Sadik"]}]
                                :splitters ["Alex" "Joachim" "Sadik" "Patrik"]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "booze"}
                               {:payments [{:amount 30
                                            :splitters ["Sadik"]}]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "car"}
                               {:payments [{:amount 50
                                            :splitters ["Sadik"]}]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "food"}
                               {:payments [{:amount 521
                                             :splitters ["Hussein"]}]
-                                :currency "hr"}
+                               :currency "hr"
+                               :tag "food"}
                               {:payments [{:amount 60
                                            :splitters ["Joachim"]}]
-                               :currency "hr"}
+                               :currency "hr"
+                               :tag "food"}
                               ]}}}))
 (def staging (r/atom {}))
 
@@ -167,19 +201,35 @@
            [:td.right.aligned {:style {:color (colors member)}}
             (gstring/format "%.2f" (get-in currency-saldos [currency member]))])])]]))
 
+(defn render-tag [tag]
+  (case tag
+    "car" [:i.ui.large.car.icon]
+    "food" [:i.ui.large.food.icon]
+    "booze" [:i.ui.large.cocktail.icon]
+    nil [:i.ui.large.help.icon]
+    tag))
+
 (defn turnover-view [trip]
   (let [currencies (:currencies trip)
-        to (e/turnover trip)]
-    [:table.ui.celled.table
+        to (e/turnover trip)
+        tags (sort-by val > (e/tag-sums trip))]
+    [:table.ui.fixed.striped.celled.table
      [:thead
       [:tr
+       [:th]
        (for [[c _] currencies]
          [:th.right.aligned
           [:i {:class (str c " flag")}]])]]
      [:tbody
-      [:tr
-       (for [[c v] currencies]
-         [:td.right.aligned (gstring/format "%.2f" (* v to))])]]]))
+      (for [[t s] tags]
+        [:tr
+         [:td.right.aligned (render-tag t)]
+         (for [[c v] currencies]
+           [:td.right.aligned (gstring/format "%.2f" (* v s))])])]
+     [:tfoot  [:tr
+               [:th {:style {:font-weight "bold"}} "Total"]
+              (for [[c v] currencies]
+                [:th.right.aligned  {:style {:font-weight "bold"}} (gstring/format "%.2f" (* v to))])]]]))
 
 (defn app []
   [:div.ui.container
