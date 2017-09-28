@@ -211,8 +211,9 @@
 
 (defn turnover-view [trip]
   (let [currencies (:currencies trip)
-        to (e/turnover trip)
-        tags (sort-by val > (e/tag-sums trip))]
+        tag-sum (e/tag-sums trip)
+        tags (sort-by val > tag-sum)
+        to (e/tag-sums-sum tag-sum)]
     [:table.ui.fixed.striped.celled.table
      [:thead
       [:tr

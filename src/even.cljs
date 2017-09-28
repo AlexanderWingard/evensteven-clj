@@ -28,17 +28,20 @@
             [(zipmap (:members trip) (repeat 0))]
             (:transactions trip)))
 
-(defn turnover [trip]
-  (r/reduce (fn [acc transaction]
-              (+ acc (reduce + (map :amount (:payments transaction)))))
-            0
-            (:transactions trip)))
+(defn currency-convert [amount currency currencies]
+  (if (nil? currency)
+    amount
+    (/ amount (get currencies currency))))
 
 (defn tag-sums [trip]
-  (r/reduce (fn [acc transaction]
-              (merge-with + acc {(:tag transaction) (reduce + (map :amount (:payments transaction)))}))
-            {}
-            (:transactions trip)))
+  (dissoc (r/reduce (fn [acc transaction]
+                      (merge-with + acc {(:tag transaction) (reduce + (map (fn [t] (currency-convert (:amount t) (:currency transaction) (:currencies trip))) (:payments transaction)))}))
+                    {}
+                    (:transactions trip))
+          "transfer"))
+
+(defn tag-sums-sum [ts]
+  (reduce-kv (fn [m k v] (if (= k "transfer") m (+ m v))) 0 ts))
 
 (defn currency-saldos [even currencies]
   (reduce-kv (fn [m k v] (assoc m k (into {} (for [[ke ve] (last even)] [ke (* ve v)])))) {} currencies))

@@ -62,6 +62,8 @@
 (def expected-currency {"Alex" 50 "Sadik" -50})
 
 (deftest test-currency
-  (is (= expected-currency (last (e/calculate example-currency)))))
+  (is (= expected-currency (last (e/calculate example-currency))))
+  (is (= 150 (e/tag-sums-sum (e/tag-sums example-currency)))))
+
 
 (t/run-tests)
