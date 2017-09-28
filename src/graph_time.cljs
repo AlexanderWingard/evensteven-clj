@@ -14,7 +14,7 @@
             offset-scale (.. js/d3
                              (scaleBand)
                              (domain members)
-                             (range #js [-4 4]))
+                             (range #js [0 0]))
             x-scale (.. js/d3
                         (scaleLinear)
                         (range #js [10 (- width 10)])

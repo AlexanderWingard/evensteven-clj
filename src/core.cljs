@@ -2,6 +2,7 @@
   (:require
    [evensteven.graph-time :as time]
    [goog.string :as gstring]
+   [cljs.pprint :refer [pprint]]
    [cljsjs.d3 :as d3]
    [clojure.string :as str]
    [clojure.core.reducers :as red]
@@ -189,7 +190,32 @@
                               {:payments [{:amount 580
                                            :splitters ["Joachim"]}]
                                :currency "se"
-                               :tag "car"}]}
+                               :tag "car"}
+                              {:payments [{:amount 10
+                                           :splitters ["Joachim"]}]
+                               :splitters ["Sadik"]
+                               :tag "transfer"}
+                              {:payments [{:amount 33
+                                           :splitters ["Joachim"]}]
+                               :splitters ["Sadik"]
+:currency "hr"
+                               :tag "transfer"}
+
+                              {:payments [{:amount 1182
+                                           :splitters ["Patrik"]}]
+                               :splitters ["Sadik"]
+                               :currency "se"
+                               :tag "transfer"}
+                              {:payments [{:amount 225.52
+                                           :splitters ["Alex"]}]
+                               :splitters ["Sadik"]
+                               :currency "se"
+                               :tag "transfer"}
+                              {:payments [{:amount 880
+                                           :splitters ["Hussein"]}]
+                               :splitters ["Sadik"]
+                               :currency "se"
+                               :tag "transfer"}]}
               "simple" {
                         :members ["A" "B" "C" "D"]
                         :currencies {"se" 1
@@ -309,7 +335,7 @@
          [:h2.ui.header
           [:i.database.icon]
           [:div.content "Transactions"]]
-         [:pre {:style {:font-size "0.8em"}} (with-out-str (cljs.pprint/pprint trip))]])
+         [:pre {:style {:overflow "scroll" :font-size "0.8em"}} (with-out-str (pprint trip))]])
 
       :else
       [trips-view])]])
