@@ -23,10 +23,15 @@
                             "hr" 4
                             "eu" 0.5
                             "se" 5}
-               :transactions [{:payments [{:amount 494.87
+               :transactions [;; {:payments [{:amount 1000
+                              ;;              :splitters ["Alex" "Joachim" "Sadik" "Patrik"]}]
+                              ;;  :splitters ["Alex" "Joachim" "Sadik" "Patrik"]
+                              ;;  :currency "se"
+                              ;;  :tag "flight"}
+                              {:payments [{:amount 494.87
                                            :splitters ["Alex"]}]
                                :tag "car"}
-                              {:payments [{:amount 334.70
+                              {:payments [{:amount 352
                                            :splitters ["Sadik"]}]
                                :tag "car"}
                               {:payments [{:amount 106
@@ -154,7 +159,35 @@
                                            :splitters ["Joachim"]}]
                                :currency "hr"
                                :tag "food"}
-                              ]}}}))
+                              {:payments [{:amount 7
+                                           :splitters ["Alex"]}]
+                               :currency "hr"
+                               :tag "car"}
+                              {:payments [{:amount 2.5
+                                           :splitters ["Sadik"]}]
+                               :tag "car"}
+                              {:payments [{:amount 102.5
+                                           :splitters ["Patrik"]}]
+                               :tag "food"}
+                              {:payments [{:amount 8
+                                           :splitters ["Sadik"]}]
+                               :tag "food"}
+                              {:payments [{:amount 43
+                                           :splitters ["Hussein"]}]
+                               :tag "food"}
+                              {:payments [{:amount 90
+                                           :splitters ["Sadik"]}]
+                               :tag "food"}
+                              {:payments [{:amount 50
+                                           :splitters ["Alex"]}]
+                               :splitters ["Sadik"]
+                               :currency "hr"
+                               :tag "transfer"}
+                              {:payments [{:amount 20
+                                           :splitters ["Alex"]}]
+                               :splitters ["Sadik"]
+                               :tag "transfer"}]}}}))
+
 (def staging (r/atom {}))
 
 (defn hash-change []
@@ -204,6 +237,7 @@
 (defn render-tag [tag]
   (case tag
     "car" [:i.ui.large.car.icon]
+    "flight" [:i.ui.large.plane.icon]
     "food" [:i.ui.large.food.icon]
     "booze" [:i.ui.large.cocktail.icon]
     nil [:i.ui.large.help.icon]
