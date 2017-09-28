@@ -23,11 +23,10 @@
                             "hr" 4
                             "eu" 0.5
                             "se" 5}
-               :transactions [;; {:payments [{:amount 1000
-                              ;;              :splitters ["Alex" "Joachim" "Sadik" "Patrik"]}]
-                              ;;  :splitters ["Alex" "Joachim" "Sadik" "Patrik"]
-                              ;;  :currency "se"
-                              ;;  :tag "flight"}
+               :transactions [{:payments [{:amount (* 781.25 5)
+                                           :splitters ["Alex" "Joachim" "Sadik" "Patrik" "Hussein"]}]
+                               :currency "se"
+                               :tag "flight"}
                               {:payments [{:amount 494.87
                                            :splitters ["Alex"]}]
                                :tag "car"}
@@ -186,7 +185,11 @@
                               {:payments [{:amount 20
                                            :splitters ["Alex"]}]
                                :splitters ["Sadik"]
-                               :tag "transfer"}]}
+                               :tag "transfer"}
+                              {:payments [{:amount 580
+                                           :splitters ["Joachim"]}]
+                               :currency "se"
+                               :tag "car"}]}
               "simple" {
                         :members ["A" "B" "C" "D"]
                         :currencies {"se" 1
@@ -306,8 +309,7 @@
          [:h2.ui.header
           [:i.database.icon]
           [:div.content "Transactions"]]
-         (for [row (:transactions trip)]
-           [:div (pr-str row)])])
+         [:pre {:style {:font-size "0.8em"}} (with-out-str (cljs.pprint/pprint trip))]])
 
       :else
       [trips-view])]])
