@@ -152,7 +152,7 @@
                                :currency "hr"
                                :tag "food"}
                               {:payments [{:amount 521
-                                            :splitters ["Hussein"]}]
+                                           :splitters ["Hussein"]}]
                                :currency "hr"
                                :tag "food"}
                               {:payments [{:amount 60
@@ -186,7 +186,23 @@
                               {:payments [{:amount 20
                                            :splitters ["Alex"]}]
                                :splitters ["Sadik"]
-                               :tag "transfer"}]}}}))
+                               :tag "transfer"}]}
+              "simple" {
+                        :members ["A" "B" "C" "D"]
+                        :currencies {"se" 1
+                                     "eu" .1}
+                        :transactions [{:payments [{:amount 100
+                                                    :splitters ["A"]}]
+                                        :subsplits [{:amount 20
+                                                     :splitters ["A" "B"]}]}
+                                       {:payments [{:amount 10
+                                                    :splitters ["B"]}]
+                                        :splitters ["A"]
+                                        :tag "transfer"}
+                                       {:payments [{:amount 20
+                                                    :splitters ["D"]}]
+                                        :splitters ["A"]
+                                        :tag "transfer"}]}}}))
 
 (def staging (r/atom {}))
 
